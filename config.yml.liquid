@@ -1,0 +1,20 @@
+{% capture today %}{{ 'now' | date: '%Y/%m/%d/%H' }}{% endcapture %}
+in:
+  type: mysql
+  host: {{env.DB_HOST}}
+  user: {{env.DB_USER}}
+  password: {{env.DB_PASS}}
+  database: {{env.DB_NAME}}
+  table: {{env.TBL_NAME}}
+  select: {{env.COLUMN_NAME}}
+out:
+  type: s3
+  path_prefix: {{env.TBL_NAME}}/{{ today }}/{{env.DB_ID}}
+  file_ext: .json.gz
+  bucket: {{env.S3_BUCKET}}
+  endpoint: s3-ap-northeast-1.amazonaws.com
+  auth_method: instance
+  encoders:
+  - type: gzip
+  formatter:
+    type: jsonl

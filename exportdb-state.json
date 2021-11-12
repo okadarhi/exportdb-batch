@@ -1,0 +1,66 @@
+{
+  "Comment": "This is your state machine",
+  "StartAt": "Parallel",
+  "States": {
+    "Parallel": {
+      "Type": "Parallel",
+      "End": true,
+      "Branches": [
+        {
+          "StartAt": "Export table01",
+          "States": {
+            "Export table01": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::ecs:runTask.sync",
+              "Parameters": {
+                "LaunchType": "FARGATE",
+                "Cluster": "arn:aws:ecs:ap-northeast-1:<アカウントID>:cluster/okada-exportdb-cluster",
+                "TaskDefinition": "arn:aws:ecs:ap-northeast-1:<アカウントID>:task-definition/okada-exportdb-taskdef-table01:1",
+                "NetworkConfiguration": {
+                  "AwsvpcConfiguration": {
+                    "AssignPublicIp": "ENABLED",
+                    "SecurityGroups": [
+                      "<セキュリティグループ>"
+                    ],
+                    "Subnets": [
+                      "<サブネット1>",
+                      "<サブネット2>"
+                    ]
+                  }
+                }
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "Export table02",
+          "States": {
+            "Export table02": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::ecs:runTask.sync",
+              "Parameters": {
+                "LaunchType": "FARGATE",
+                "Cluster": "arn:aws:ecs:ap-northeast-1:<アカウントID>:cluster/okada-exportdb-cluster",
+                "TaskDefinition": "arn:aws:ecs:ap-northeast-1:<アカウントID>:task-definition/okada-exportdb-taskdef-table02:1",
+                "NetworkConfiguration": {
+                  "AwsvpcConfiguration": {
+                    "AssignPublicIp": "ENABLED",
+                    "SecurityGroups": [
+                      "<セキュリティグループ>"
+                    ],
+                    "Subnets": [
+                      "<サブネット1>",
+                      "<サブネット2>"
+                    ]
+                  }
+                }
+              },
+              "End": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

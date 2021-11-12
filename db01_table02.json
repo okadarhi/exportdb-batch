@@ -1,0 +1,65 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "okada-exportdb-container-table02",
+            "image": "<アカウントID>.dkr.ecr.ap-northeast-1.amazonaws.com/okada-repo:latest",
+            "cpu": 0,
+            "portMappings": [],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "secrets": [
+                {
+                    "name": "S3_BUCKET",
+                    "valueFrom": "/okada-exportdb/table02/S3_BUCKET"
+                },
+                {
+                    "name": "DB_HOST",
+                    "valueFrom": "/okada-exportdb/table02/DB_HOST"
+                },
+                {
+                    "name": "DB_ID",
+                    "valueFrom": "/okada-exportdb/table02/DB_ID"
+                },
+                {
+                    "name": "DB_NAME",
+                    "valueFrom": "/okada-exportdb/table02/DB_NAME"
+                },
+                {
+                    "name": "DB_USER",
+                    "valueFrom": "/okada-exportdb/table02/DB_USER"
+                },
+                {
+                    "name": "DB_PASS",
+                    "valueFrom": "/okada-exportdb/table02/DB_PASS"
+                },
+                {
+                    "name": "TBL_NAME",
+                    "valueFrom": "/okada-exportdb/table02/TBL_NAME"
+                },
+                {
+                    "name": "COLUMN_NAME",
+                    "valueFrom": "/okada-exportdb/table02/COLUMN_NAME"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/okada-exportdb-taskdef-table02",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
+    ],
+    "family": "okada-exportdb-taskdef-table02",
+    "taskRoleArn": "arn:aws:iam::<アカウントID>:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::<アカウントID>:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512"
+}
